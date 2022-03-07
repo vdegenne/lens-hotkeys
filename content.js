@@ -16,3 +16,10 @@ window.addEventListener('keypress', function (event) {
     }
   }
 })
+
+
+document.querySelectorAll('[aria-label="Copy selected text"]')[0].parentElement.remove()
+// window.onload = function (e) {
+//   console.log(
+//   )
+// }
