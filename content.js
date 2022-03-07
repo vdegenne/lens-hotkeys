@@ -15,6 +15,27 @@ window.addEventListener('keypress', function (event) {
       button.click()
     }
   }
+  if(event.key === 'c') {
+    const button = getButton('Copy text')
+    if (button) {
+      button.click()
+    }
+  }
+  if(event.key === 'a') {
+    const query = document.querySelector('h2').innerText.replace(/\"/g, '').trim()
+    if (query) {
+      this.window.open(`http://www.google.com/search?q=${encodeURIComponent(query)}&tbm=isch`, '_blank')
+    }
+  }
+
+
+  if(event.key === 'g') {
+    // Get the selected text
+    const query = document.querySelector('h2').innerText.replace(/\"/g, '').trim()
+    if (query) {
+      this.window.open(`https://jisho.org/search/${encodeURIComponent(query)}`, '_blank')
+    }
+  }
 })
 
 
