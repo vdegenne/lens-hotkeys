@@ -36,6 +36,13 @@ window.addEventListener('keypress', function (event) {
       this.window.open(`https://jisho.org/search/${encodeURIComponent(query)}`, '_blank')
     }
   }
+  if(event.key === 'h') {
+    // Get the selected text
+    const query = document.querySelector('h2').innerText.replace(/\"/g, '').trim()
+    if (query) {
+      this.window.open(`https://www.mdbg.net/chinese/dictionary?page=worddict&wdrst=0&wdqb=${encodeURIComponent(query)}`, '_blank')
+    }
+  }
 })
 
 
