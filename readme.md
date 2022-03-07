@@ -5,6 +5,7 @@ After selecting text, hit one of the following keys to trigger the action
 - <kbd>s</kbd> : Li(s)ten the word ((s)ound)
 - <kbd>c</kbd> : (C)opy the word
 - <kbd>a</kbd> : Google im(a)ges the word
+
 Extra :
 - <kbd>g</kbd> : (Ji)sho the word (Japanese dictionary)
 - <kbd>h</kbd> : MDGB ((H)anzi codex; Chinese and Kanji characters database)
