@@ -1,9 +1,8 @@
 {
   "name": "lens-hotkeys",
   "description": "Add some hotkeys to the Google Lens interface",
-  "version": "1.0.0",
-  "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "version": "1.0",
+  "manifest_version": 3,
   "content_scripts": [
     {
       "matches": [
@@ -11,10 +10,5 @@
       ],
       "js": [ "content.js" ]
     }
-  ],
-  "web_accessible_resources": [
-    "content.js",
-    "images/*",
-    "fonts/*"
   ]
 }
