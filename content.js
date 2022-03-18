@@ -14,19 +14,19 @@ window.addEventListener('keydown', function (event) {
   // }
 
   if (event.key === 't' || event.key === 'T') {
-    const button = getButton('Translate')
+    const button = getButton('Translate') || getButton('翻訳')
     if (button) {
       button.click()
     }
   }
   if (event.key === 's' || event.key === 'S') {
-    const button = getButton('Listen')
+    const button = getButton('Listen') || getButton('読み上げ')
     if (button) {
       button.click()
     }
   }
   if(event.key === 'c' || event.key === 'C') {
-    const button = getButton('Copy text')
+    const button = getButton('Copy text') || getButton('テキストをコピー')
     if (button) {
       button.click()
     }
@@ -56,10 +56,10 @@ window.addEventListener('keydown', function (event) {
 })
 
 
-document.querySelectorAll('[aria-label="Copy selected text"]')[0].parentElement.remove()
+document.querySelectorAll('[aria-label="Copy selected text"],[aria-label="選択したテキストをコピー"]')[0].parentElement.remove()
 
 
 window.onload = function (e) {
-  const button = [...document.querySelectorAll('button')].filter(b => b.innerText === 'Text')[0];
+  const button = [...document.querySelectorAll('button')].filter(b => b.innerText === 'Text' || b.innerText === 'テキスト')[0];
   button && button.click()
 }
