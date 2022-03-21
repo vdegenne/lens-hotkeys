@@ -3,6 +3,9 @@ function getButton (content) {
 }
 
 window.addEventListener('keydown', function (event) {
+  if (event.altKey || event.ctrlKey || event.shiftKey) {
+    return;
+  }
   // if (event.altKey && (event.key === 't' || event.key === 'T')) {
   //   event.stopPropagation()
   //   event.preventDefault()
