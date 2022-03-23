@@ -1,6 +1,9 @@
 function getButton (content) {
   return [...document.querySelectorAll('button')].filter(b => b.innerText === content).pop()
 }
+function getQuery () {
+  return document.querySelector('h2').innerText.replace(/\"/g, '').trim()
+}
 
 window.addEventListener('keydown', function (event) {
   if (event.altKey || event.ctrlKey || event.shiftKey) {
@@ -17,9 +20,13 @@ window.addEventListener('keydown', function (event) {
   // }
 
   if (event.key === 't' || event.key === 'T') {
-    const button = getButton('Translate') || getButton('翻訳')
-    if (button) {
-      button.click()
+    // const button = getButton('Translate') || getButton('翻訳')
+    // if (button) {
+    //   button.click()
+    // }
+    const query = getQuery()
+    if (query) {
+      this.window.open(`https://translate.google.com/?sl=auto&tl=en&text=${encodeURIComponent(query)}&op=translate`)
     }
   }
   if (event.key === 's' || event.key === 'S') {
@@ -35,7 +42,7 @@ window.addEventListener('keydown', function (event) {
     }
   }
   if(event.key === 'a' || event.key === 'A') {
-    const query = document.querySelector('h2').innerText.replace(/\"/g, '').trim()
+    const query = getQuery()
     if (query) {
       this.window.open(`http://www.google.com/search?q=${encodeURIComponent(query)}&tbm=isch`, '_blank')
     }
@@ -44,14 +51,14 @@ window.addEventListener('keydown', function (event) {
 
   if(event.key === 'g' || event.key === 'G') {
     // Get the selected text
-    const query = document.querySelector('h2').innerText.replace(/\"/g, '').trim()
+    const query = getQuery()
     if (query) {
       this.window.open(`https://jisho.org/search/${encodeURIComponent(query)}`, '_blank')
     }
   }
   if(event.key === 'h' || event.key === 'H') {
     // Get the selected text
-    const query = document.querySelector('h2').innerText.replace(/\"/g, '').trim()
+    const query = getQuery()
     if (query) {
       this.window.open(`https://www.mdbg.net/chinese/dictionary?page=worddict&wdrst=0&wdqb=${encodeURIComponent(query)}`, '_blank')
     }
