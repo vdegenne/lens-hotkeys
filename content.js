@@ -59,13 +59,18 @@ window.addEventListener('keydown', function (event) {
 })
 
 
+let search;
+
 setInterval(() => {
   const annoyingCopyButton = document.querySelectorAll('[aria-label="Copy selected text"],[aria-label="選択したテキストをコピー"]')[0]
   if (annoyingCopyButton) {
     // If the button is present it is either means the page loaded or the user pasted an image
     // In that case we select the text button
     annoyingCopyButton.parentElement.remove()
-    const button = [...document.querySelectorAll('button')].filter(b => b.innerText === 'Text' || b.innerText === 'テキスト')[0];
-    button && button.click()
+    if (window.location.search !== search) {
+      const button = [...document.querySelectorAll('button')].filter(b => b.innerText === 'Text' || b.innerText === 'テキスト')[0];
+      button && button.click()
+      search = window.location.search
+    }
   }
 }, 2000)
