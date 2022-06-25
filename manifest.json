@@ -8,7 +8,11 @@
       "matches": [
         "https://lens.google.com/*"
       ],
-      "js": [ "content.js" ]
+      "js": [ "content.js" ],
+      "run_at": "document_start"
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
 }

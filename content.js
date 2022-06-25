@@ -1,11 +1,33 @@
-function getButton (content) {
-  return [...document.querySelectorAll('button')].filter(b => b.innerText === content).pop()
+// function getButton (content) {
+//   return [...document.querySelectorAll('button')].filter(b => b.innerText === content).pop()
+// }
+function getButton (label, timeoutMs = 5000) {
+  return new Promise(async (resolve, reject) => {
+    let thebutton, resolved = false
+    setTimeout(() => { reject(); resolved = true }, timeoutMs)
+    while (!resolved && !(thebutton = [...document.querySelectorAll('button')].find(i => i.textContent == label))) {
+      await new Promise(r => setTimeout(r, 250))
+    }
+    resolve(thebutton)
+  })
 }
+function getMoreButton () {
+  return document.querySelectorAll('[href^="https://www.google.com/search"]')[0]
+}
+
+async function getCopyAllButton () {
+  let thebutton
+  while (!(thebutton = [...document.querySelectorAll('button')].find(i => i.textContent == 'Select all text'))) {
+    await new Promise(r => setTimeout(r, 250))
+  }
+  return thebutton
+}
+
 function getQuery () {
   return document.querySelector('h2').innerText.replace(/\"/g, '').trim()
 }
 
-window.addEventListener('keydown', function (event) {
+window.addEventListener('keypress', async function (event) {
   if (event.altKey || event.ctrlKey || event.shiftKey) {
     return;
   }
@@ -18,6 +40,18 @@ window.addEventListener('keydown', function (event) {
   //   }
   //   return
   // }
+  if (event.key == 'f') {
+    try {
+      const button = await getButton('Select all text')
+      if (button) {
+        button.click()
+        ;(await getButton('Copy text'))?.click()
+        chrome.runtime.sendMessage({ closeThis: true });
+      }
+    } catch (e) {
+      return
+    }
+  }
 
   if (event.key === 't' || event.key === 'T') {
     // const button = getButton('Translate') || getButton('翻訳')
@@ -63,7 +97,16 @@ window.addEventListener('keydown', function (event) {
       this.window.open(`https://www.mdbg.net/chinese/dictionary?page=worddict&wdrst=0&wdqb=${encodeURIComponent(query)}`, '_blank')
     }
   }
+
+  if (event.key === 'm' || event.key === 'M') {
+    const moreButton = getMoreButton()
+    if (moreButton) {
+      moreButton.click()
+    }
+  }
 })
+
+
 
 
 let search;
