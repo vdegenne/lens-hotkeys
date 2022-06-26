@@ -1,11 +1,14 @@
 // function getButton (content) {
 //   return [...document.querySelectorAll('button')].filter(b => b.innerText === content).pop()
 // }
-function getButton (label, timeoutMs = 5000) {
+function getButton (labels, timeoutMs = 5000) {
+  if (typeof labels === 'string') {
+    labels = [labels]
+  }
   return new Promise(async (resolve, reject) => {
     let thebutton, resolved = false
     setTimeout(() => { reject(); resolved = true }, timeoutMs)
-    while (!resolved && !(thebutton = [...document.querySelectorAll('button')].find(i => i.textContent == label))) {
+    while (!resolved && !(thebutton = [...document.querySelectorAll('button')].find(i => labels.includes(i.textContent)))) {
       await new Promise(r => setTimeout(r, 250))
     }
     resolve(thebutton)
@@ -64,13 +67,13 @@ window.addEventListener('keypress', async function (event) {
     }
   }
   if (event.key === 's' || event.key === 'S') {
-    const button = getButton('Listen') || getButton('読み上げ')
+    const button = await getButton('Listen', '読み上げ')
     if (button) {
       button.click()
     }
   }
   if(event.key === 'c' || event.key === 'C') {
-    const button = getButton('Copy text') || getButton('テキストをコピー')
+    const button = await getButton('Copy text', 'テキストをコピー')
     if (button) {
       button.click()
     }
