@@ -1,6 +1,16 @@
-// function getButton (content) {
-//   return [...document.querySelectorAll('button')].filter(b => b.innerText === content).pop()
-// }
+function copyToClipboard(e) { if (navigator.clipboard) return navigator.clipboard.writeText(e).catch(function (e) { throw void 0 !== e ? e : new DOMException("The request is not allowed", "NotAllowedError") }); var o = document.createElement("span"); o.textContent = e, o.style.whiteSpace = "pre", document.body.appendChild(o); var t = window.getSelection(), r = window.document.createRange(); t.removeAllRanges(), r.selectNode(o), t.addRange(r); var n = !1; try { n = window.document.execCommand("copy"); } catch (e) { console.log("error", e); } return t.removeAllRanges(), window.document.body.removeChild(o), n ? Promise.resolve() : Promise.reject(new DOMException("The request is not allowed", "NotAllowedError")) }
+
+function getLensSelection () {
+  const spans = [...document.querySelectorAll('span')].filter(s=>s.id=='translate'||!s.classList.length)
+  const translateSpanIndex = spans.findIndex(s=>s.id=='translate')
+  if (translateSpanIndex >= 0) {
+    const valueSpan = spans[translateSpanIndex + 1]
+    if (valueSpan) {
+      return valueSpan.textContent?.trim().replace(/^"|"$/g, '')
+    }
+  }
+}
+
 function getButton (labels, timeoutMs = 5000) {
   if (typeof labels === 'string') {
     labels = [labels]
@@ -67,15 +77,19 @@ window.addEventListener('keypress', async function (event) {
     }
   }
   if (event.key === 's' || event.key === 'S') {
-    const button = await getButton('Listen', '読み上げ')
+    const button = await getButton(['Listen', '読み上げ'])
     if (button) {
       button.click()
     }
   }
   if(event.key === 'c' || event.key === 'C') {
-    const button = await getButton('Copy text', 'テキストをコピー')
-    if (button) {
-      button.click()
+    // const button = await getButton(['Copy text', 'テキストをコピー'])
+    // if (button) {
+    //   button.click()
+    // }
+    const lensValue = getLensSelection()
+    if (lensValue) {
+      copyToClipboard(lensValue)
     }
   }
   if(event.key === 'a' || event.key === 'A') {
