@@ -37,7 +37,8 @@ async function getCopyAllButton () {
 }
 
 function getQuery () {
-  return document.querySelector('h2').innerText.replace(/\"/g, '').trim()
+  // return document.querySelector('h2').innerText.replace(/\"/g, '').trim()
+  return window.getSelection().toString().replace(/\s/g, '').trim()
 }
 
 window.addEventListener('keypress', async function (event) {
