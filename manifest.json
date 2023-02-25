@@ -9,7 +9,8 @@
         "https://lens.google.com/*"
       ],
       "js": [ "content.js" ],
-      "run_at": "document_start"
+      "run_at": "document_start",
+      "module": true
     }
   ],
   "background": {
