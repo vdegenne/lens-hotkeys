@@ -1,32 +1,38 @@
-function copyToClipboard(e) {
-  if (navigator.clipboard)
-    return navigator.clipboard.writeText(e).catch(function (e) {
-      throw void 0 !== e
-        ? e
-        : new DOMException('The request is not allowed', 'NotAllowedError');
-    });
-  var o = document.createElement('span');
-  (o.textContent = e),
-    (o.style.whiteSpace = 'pre'),
-    document.body.appendChild(o);
-  var t = window.getSelection(),
-    r = window.document.createRange();
-  t.removeAllRanges(), r.selectNode(o), t.addRange(r);
-  var n = !1;
-  try {
-    n = window.document.execCommand('copy');
-  } catch (e) {
-    console.log('error', e);
-  }
-  return (
-    t.removeAllRanges(),
-    window.document.body.removeChild(o),
-    n
-      ? Promise.resolve()
-      : Promise.reject(
-          new DOMException('The request is not allowed', 'NotAllowedError')
-        )
-  );
+// function copyToClipboard(e) {
+//   if (navigator.clipboard)
+//     return navigator.clipboard.writeText(e).catch(function (e) {
+//       throw void 0 !== e
+//         ? e
+//         : new DOMException('The request is not allowed', 'NotAllowedError');
+//     });
+//   var o = document.createElement('span');
+//   (o.textContent = e),
+//     (o.style.whiteSpace = 'pre'),
+//     document.body.appendChild(o);
+//   var t = window.getSelection(),
+//     r = window.document.createRange();
+//   t.removeAllRanges(), r.selectNode(o), t.addRange(r);
+//   var n = !1;
+//   try {
+//     n = window.document.execCommand('copy');
+//   } catch (e) {
+//     console.log('error', e);
+//   }
+//   return (
+//     t.removeAllRanges(),
+//     window.document.body.removeChild(o),
+//     n
+//       ? Promise.resolve()
+//       : Promise.reject(
+//           new DOMException('The request is not allowed', 'NotAllowedError')
+//         )
+//   );
+// }
+function copyToClipboard(text) {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => console.log('Text copied to clipboard'))
+    .catch((error) => console.error('Error copying text:', error));
 }
 
 function getLensSelection() {
@@ -81,6 +87,16 @@ async function getCopyAllButton() {
   }
   return thebutton;
 }
+
+// let _lastVisibileSelection;
+
+// document.addEventListener('selectionchange', () => {
+//   const selection = window.getSelection().toString();
+//   if (selection) {
+//     _lastVisibileSelection = selection;
+//   }
+// });
+// document.dispatchEvent(new Event('selectionchange'));
 
 function _getSelection() {
   // return document.querySelector('h2').innerText.replace(/\"/g, '').trim()
@@ -219,6 +235,16 @@ window.addEventListener('translate', (e) => {
     translateSelection();
   } else {
     translateAll();
+  }
+});
+window.addEventListener('copy-selected', async (e) => {
+  e.stopImmediatePropagation();
+  try {
+    await selectAll();
+  } catch (err) {}
+  const selection = _getSelection();
+  if (selection) {
+    copyToClipboard(selection.replace(/\s/g, ''));
   }
 });
 
