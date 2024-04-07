@@ -37,7 +37,7 @@ function copyToClipboard(text) {
 
 function getLensSelection() {
   const spans = [...document.querySelectorAll('span')].filter(
-    (s) => s.id == 'translate' || !s.classList.length
+    (s) => s.id == 'translate' || !s.classList.length,
   );
   const translateSpanIndex = spans.findIndex((s) => s.id == 'translate');
   if (translateSpanIndex >= 0) {
@@ -62,7 +62,7 @@ function getButton(labels, timeoutMs = 5000) {
     while (
       !resolved &&
       !(thebutton = [...document.querySelectorAll('button')].find((i) =>
-        labels.includes(i.textContent)
+        labels.includes(i.textContent),
       ))
     ) {
       await new Promise((r) => setTimeout(r, 250));
@@ -72,7 +72,7 @@ function getButton(labels, timeoutMs = 5000) {
 }
 function getMoreButton() {
   return document.querySelectorAll(
-    '[href^="https://www.google.com/search"]'
+    '[href^="https://www.google.com/search"]',
   )[0];
 }
 
@@ -80,7 +80,7 @@ async function getCopyAllButton() {
   let thebutton;
   while (
     !(thebutton = [...document.querySelectorAll('button')].find(
-      (i) => i.textContent == 'Select all text'
+      (i) => i.textContent == 'Select all text',
     ))
   ) {
     await new Promise((r) => setTimeout(r, 250));
@@ -119,8 +119,8 @@ async function translateSelection() {
   if (query) {
     this.window.open(
       `https://translate.google.com/?sl=auto&tl=en&text=${encodeURIComponent(
-        query
-      )}&op=translate`
+        query,
+      )}&op=translate`,
     );
   }
 }
@@ -192,7 +192,7 @@ window.addEventListener('keypress', async function (event) {
     if (query) {
       this.window.open(
         `http://www.google.com/search?q=${encodeURIComponent(query)}&tbm=isch`,
-        '_blank'
+        '_blank',
       );
     }
   }
@@ -203,7 +203,7 @@ window.addEventListener('keypress', async function (event) {
     if (query) {
       this.window.open(
         `https://jisho.org/search/${encodeURIComponent(query)}`,
-        '_blank'
+        '_blank',
       );
     }
   }
@@ -213,9 +213,9 @@ window.addEventListener('keypress', async function (event) {
     if (query) {
       this.window.open(
         `https://www.mdbg.net/chinese/dictionary?page=worddict&wdrst=0&wdqb=${encodeURIComponent(
-          query
+          query,
         )}`,
-        '_blank'
+        '_blank',
       );
     }
   }
@@ -252,7 +252,7 @@ let search;
 
 setInterval(() => {
   const annoyingCopyButton = document.querySelectorAll(
-    '[aria-label="Copy selected text"],[aria-label="選択したテキストをコピー"]'
+    '[aria-label="Copy selected text"],[aria-label="選択したテキストをコピー"]',
   )[0];
   if (annoyingCopyButton) {
     // If the button is present it is either means the page loaded or the user pasted an image
@@ -260,10 +260,10 @@ setInterval(() => {
     annoyingCopyButton.parentElement.remove();
     if (window.location.search !== search) {
       const button = [...document.querySelectorAll('button')].filter(
-        (b) => b.innerText === 'Text' || b.innerText === 'テキスト'
+        (b) => b.innerText === 'Text' || b.innerText === 'テキスト',
       )[0];
       button && button.click();
       search = window.location.search;
     }
   }
-}, 2000);
+}, 1200);
